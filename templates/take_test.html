@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Прохождение теста{% endblock %}
+
+{% block content %}
+    <h2>Тест № {{ test_instance_id }}</h2>
+    <a href="{{ url_for('quiz_bp.download_test_docx', test_instance_id=test_instance_id) }}" class="button-secondary">Скачать тест в Word</a>
+    <form method="POST" action="{{ url_for('quiz_bp.submit_test_action', test_instance_id=test_instance_id) }}">
+        {% for question in questions_with_answers %}
+        <div class="question-block">
+            <h4>{{ loop.index }}. {{ question.question_text }}</h4>
+            {% if question.topic %}
+                <small>Тема: {{ question.topic }}</small>
+            {% endif %}
+            <ul class="answers-list">
+                {% for answer in question.answers %}
+                <li>
+                    <input type="radio"
+                           name="question_{{ question.id }}"
+                           value="{{ answer.id }}"
+                           id="answer_{{ question.id }}_{{ answer.id }}"
+                           required>
+                    <label for="answer_{{ question.id }}_{{ answer.id }}">{{ answer.answer_text }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+        {% endfor %}
+        <button type="submit" class="button">Завершить тест и узнать результат</button>
+    </form>
+{% endblock %}

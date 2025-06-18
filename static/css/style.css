@@ -1,0 +1,227 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+}
+
+header h1 a:hover {
+    text-decoration: underline;
+}
+
+nav ul {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a:hover {
+    color: #ddd;
+}
+
+main {
+    padding: 20px;
+    max-width: 960px;
+    margin: 20px auto;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background: #333;
+    color: #fff;
+}
+
+h2, h3, h4 {
+    color: #333;
+}
+
+.button, button, input[type="submit"] {
+    display: inline-block;
+    background: #5cb85c;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.button:hover, button:hover, input[type="submit"]:hover {
+    background: #4cae4c;
+}
+
+.button-secondary {
+    background: #6c757d;
+}
+.button-secondary:hover {
+    background: #5a6268;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1em;
+    font-family: sans-serif;
+}
+.link-button:hover {
+    color: #0056b3;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.answer-group {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.answer-group input[type="text"] {
+    width: calc(80% - 22px); /* Оставляем место для радио-кнопки и текста */
+    margin-right: 10px;
+}
+.answer-group input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.answer-group label { /* Для метки "Правильный" */
+    display: inline;
+    font-weight: normal;
+    margin-right: 15px;
+}
+.remove-answer-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+.remove-answer-btn:hover {
+    background-color: #da190b;
+}
+
+
+.question-block {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+}
+.question-block h4 {
+    margin-top: 0;
+}
+
+ul.answers-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+ul.answers-list li {
+    margin-bottom: 8px;
+}
+ul.answers-list input[type="radio"] {
+    margin-right: 8px;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.flashes li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.flashes li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.flashes li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}

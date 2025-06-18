@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ form_title }}</h2>
+    <form method="POST" action="{{ form_action }}">
+        <div>
+            <label for="question_text">Текст вопроса:</label><br>
+            <textarea id="question_text" name="question_text" rows="4" required>{{ question.question_text if question else '' }}</textarea>
+        </div>
+        <div>
+            <label for="topic">Тема (необязательно):</label><br>
+            <input type="text" id="topic" name="topic" value="{{ question.topic if question and question.topic else '' }}">
+        </div>
+
+        <h3>Ответы (минимум 2, максимум 4 для этого прототипа):</h3>
+        <div id="answers-container">
+            {% set ans_count = (question.answers|length if question and question.answers else 2) %}
+            {% for i in range(ans_count) %}
+            <div class="answer-group">
+                <label>Ответ {{ i+1 }}:</label><br>
+                <input type="text" name="answer_text_{{ i }}" 
+                       value="{{ question.answers[i].answer_text if question and question.answers and i < question.answers|length else '' }}" 
+                       required>
+                {% set is_checked = (question and question.answers and i < question.answers|length and question.answers[i].is_correct) or (not question and i == 0) %}
+                <input type="radio"
+                       name="correct_answer_index"
+                       value="{{ i }}"
+                       id="correct_answer_{{ i }}"
+                       {% if is_checked %}checked{% endif %}
+                       required>
+                <label for="correct_answer_{{ i }}">Правильный</label>
+                {% if i >= 2 %}
+                <button type="button" class="remove-answer-btn" onclick="removeAnswer(this)">Удалить ответ</button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <input type="hidden" id="answer_count" name="answer_count" value="{{ ans_count }}">
+        <button type="button" id="add-answer-btn">Добавить вариант ответа (макс. 4)</button>
+        <br><br>
+        <button type="submit" class="button">Сохранить вопрос</button>
+        <a href="{{ url_for('admin_bp.manage_questions_page') }}" class="button-secondary">Отмена</a>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addAnswerBtn = document.getElementById('add-answer-btn');
+        const answersContainer = document.getElementById('answers-container');
+        const answerCountInput = document.getElementById('answer_count');
+
+        function updateAnswerCount() {
+            let currentAnswers = answersContainer.getElementsByClassName('answer-group').length;
+            answerCountInput.value = currentAnswers;
+            if (currentAnswers >= 4) {
+                addAnswerBtn.style.display = 'none';
+            } else {
+                addAnswerBtn.style.display = 'inline-block';
+            }
+        }
+        
+        window.removeAnswer = function(button) {
+            let currentAnswers = answersContainer.getElementsByClassName('answer-group').length;
+            if (currentAnswers > 2) { // Нельзя удалить, если осталось 2 или меньше
+                button.closest('.answer-group').remove();
+                updateAnswerCount();
+            } else {
+                alert('Для вопроса должно быть как минимум два варианта ответа.');
+            }
+        }
+
+        if (addAnswerBtn) {
+            addAnswerBtn.addEventListener('click', function() {
+                let currentAnswers = answersContainer.getElementsByClassName('answer-group').length;
+                if (currentAnswers < 4) {
+                    const newAnswerIndex = currentAnswers;
+                    const newAnswerDiv = document.createElement('div');
+                    newAnswerDiv.classList.add('answer-group');
+                    newAnswerDiv.innerHTML = `
+                        <label>Ответ ${newAnswerIndex + 1}:</label><br>
+                        <input type="text" name="answer_text_${newAnswerIndex}" required>
+                        <input type="radio" name="correct_answer_index" value="${newAnswerIndex}" id="correct_answer_${newAnswerIndex}" required>
+                        <label for="correct_answer_${newAnswerIndex}">Правильный</label>
+                        <button type="button" class="remove-answer-btn" onclick="removeAnswer(this)">Удалить ответ</button>
+                    `;
+                    answersContainer.appendChild(newAnswerDiv);
+                    updateAnswerCount();
+                }
+            });
+        }
+        updateAnswerCount(); // Инициализация при загрузке
+    });
+</script>
+{% endblock %}

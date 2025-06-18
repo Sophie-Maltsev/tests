@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Результаты теста{% endblock %}
+
+{% block content %}
+    <h2>Результаты теста № {{ attempt.test_instance_id }}</h2>
+    <p>Вы ответили правильно на <strong>{{ attempt.score }}</strong> из <strong>{{ attempt.total_questions_in_test }}</strong> вопросов.</p>
+
+    {% set percentage = (attempt.score / attempt.total_questions_in_test * 100) | round(2) if attempt.total_questions_in_test > 0 else 0 %}
+    <p>Ваш результат: {{ percentage }}%</p>
+
+    {% if percentage >= 80 %}
+        <p style="color: green; font-weight: bold;">Отлично!</p>
+    {% elif percentage >= 60 %}
+        <p style="color: orange; font-weight: bold;">Хорошо, но можно лучше.</p>
+    {% else %}
+        <p style="color: red; font-weight: bold;">Стоит попробовать еще раз.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('quiz_bp.start_new_test_page') }}" class="button">Начать новый тест</a>
+    <a href="{{ url_for('quiz_bp.start_new_test_page') }}" class="button-secondary">На главную</a>
+{% endblock %}
